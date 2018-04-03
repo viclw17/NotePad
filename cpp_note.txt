@@ -1,0 +1,72 @@
+Tried to use vim to write raw c program and compile using command line and run the executable to see the result.
+
+First of all, keep on vim practice. Finish the vim game online and then try to use it more in daily basis. Eventaully use vim to write blog posts and use terminal to manage blog files and use git command for version control. Everything though command line. This would be AWESOME.
+
+testing:
+#include <stdio.h>
+int main(void){
+int x, y, z;
+x = 0;
+y = 1;
+do {
+printf("%d\n", x);
+z = x + y;
+x = y;
+y = z;
+} while (x < 255);
+}
+
+Secondly, for terminal programming workflow, use gcc to compile .c program.
+"The GNU Compiler Collection (GCC) is a compiler system produced by the GNU Project supporting various programming languages.
+
+or actually also can use clang
+"Clang is a compiler front end for the programming languages C, C++, Objective-C, Objective-C++, OpenMP, OpenCL, and CUDA. It uses LLVM as its back end and has been part of the LLVM release cycle since LLVM 2.6.
+It is designed to act as a drop-in replacement for the GNU Compiler Collection, supporting most of its compilation flags and unofficial language extensions.
+
+gcc fib.c
+clang fib.c
+
+this will compile program and generate a.out file
+./a.out to run executable.
+
+"a.out is a file format used in older versions of Unix-like computer operating systems for executables, object code, and, in later systems, shared libraries. This is an abbreviated form of "assembler output"
+
+clang -o fib fib.c
+to generate fib instead of default a.out :)
+
+otool - object file displaying tool
+otool -tv fib  
+"-t print the text section (disassemble with -v)
+fib:
+(__TEXT,__text) section
+_main:
+0000000100000f30	pushq	%rbp
+0000000100000f31	movq	%rsp, %rbp
+0000000100000f34	subq	$0x20, %rsp
+0000000100000f38	movl	$0x0, -0x4(%rbp)
+
+0000000100000f3f	movl	$0x0, -0x8(%rbp) // x=0, movl: move long
+// value $0x0 is moved into address offset -0x8, location in the memory
+// %rbp: stack base pointer
+0000000100000f46	movl	$0x1, -0xc(%rbp) // y=1 
+
+// start of loop
+0000000100000f4d	leaq	0x5a(%rip), %rdi // from here all about printf
+0000000100000f54	movl	-0x8(%rbp), %esi // x
+0000000100000f57	movb	$0x0, %al
+0000000100000f59	callq	0x100000f8c // call printf
+
+0000000100000f5e	movl	-0x8(%rbp), %esi // x move into esi register
+0000000100000f61	addl	-0xc(%rbp), %esi // add y to esi
+0000000100000f64	movl	%esi, -0x10(%rbp) // move esi into z
+0000000100000f67	movl	-0xc(%rbp), %esi
+0000000100000f6a	movl	%esi, -0x8(%rbp)
+0000000100000f6d	movl	-0x10(%rbp), %esi
+0000000100000f70	movl	%esi, -0xc(%rbp)
+0000000100000f73	movl	%eax, -0x14(%rbp) // eax contains the return value of the printf call 
+0000000100000f76	cmpl	$0xff, -0x8(%rbp) // compare long with 255 $0xff
+0000000100000f7d	jl	0x100000f4d // jump to address 0x100000f4d
+0000000100000f83	movl	-0x4(%rbp), %eax
+0000000100000f86	addq	$0x20, %rsp
+0000000100000f8a	popq	%rbp
+0000000100000f8b	retq

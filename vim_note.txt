@@ -1,0 +1,7 @@
+u - step back
+x - delete word
+
+0 - line begin
+$ - line end
+
+
