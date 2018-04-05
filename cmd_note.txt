@@ -2,19 +2,22 @@ cmd notes
 This is the note for everyday command line practice.
 
 ls -al
+ll shortcut for list long, defined in profile
 mv test.txt test_new_name.txt (rename)
-mv test.txt ./new_folder (move, directory operand
-open . (open the present working directory in Finder)
+mv test.txt ./new_folder (move, directory operand)
+open . (open the present working directory in Finder, mac)
+tree -AC (graphics and coloration) -L level
 
 jekyll fix:
 ruby and liquid seem outdated
 use RVM ruby version manager to fix ruby
-install latest ruby 2.4.2, removed old version, set as default and current
-lots of gems also got removed, maybe they are attached to old version of ruby.
+install latest ruby 2.4.2, removed old version, set as default and current using RVM
+lots of gems also got removed, maybe they are attached to old version of ruby
 reinstall jekyll <gem install jekyll>
 gem list
 gem list jekyll
 jekyll --version
 gem install bundler
 
-tree -AC (graphics and coloration) -L level
+
+
