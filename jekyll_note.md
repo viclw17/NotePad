@@ -28,6 +28,19 @@ After cleanup:
 ├── about.md
 └── index.md
 ```
+## Jekyll Fix
+Ruby and liquid seem outdated. Use RVM ([Ruby Version Manager](https://rvm.io/)) ruby version manager to fix ruby first. Install latest ruby 2.4.2, use RVM to remove old version, set new version as default and current. 
+Lots of gems also got removed, maybe they are attached to old version of ruby.
+Reinstall Jekyll. Reinstall [Bundler](http://bundler.io/).
+```Bash
+gem install jekyll
+gem list
+gem list jekyll
+jekyll --version/-v
+gem install bundler
+gem list bundler
+bundler --version/-v
+```
 
 ## Jekyll Setup 
 ```Bash
