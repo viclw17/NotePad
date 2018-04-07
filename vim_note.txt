@@ -1,7 +1,22 @@
+i - insert mode
+esc - command mode
+
+:q - quit
+:q!
+:w - write
+:wq
+
 u - step back
-x - delete word
+
+x - delete word at curser
+dd - delete line
+p - put line back (after current line)
 
 0 - line begin
 $ - line end
 
-
+Ctrl-F	Go forward one screen
+Ctrl-B	Go backward one screen
+G	- Go to last line
+1G - Go to first line
+/<string>	Search for <string>
