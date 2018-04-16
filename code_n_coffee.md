@@ -39,3 +39,20 @@ compact, less lines
 terse, less keywords
 dynamically typed
 control characters, no ;
+
+# other speeches
+* blockchain
+* haskell
+* machine learning using js
+* oo using ruby
+* learn css
+* lisp
+
+minimal viable product mvp
+minimal-viable-scalable
+> making product solving real world problems
+> gaming, pure artistic and entertaining
+
+no rewrites, only adaptations
+focus on the happy path
+domiain, primary goal
