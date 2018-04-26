@@ -44,6 +44,7 @@ clip space      screen space
 * 1. processes vertices (or streams of data) into clipspace vertices.
 * 2. draw pixels based on the first part.
 
+## Code
 ```javascript
 function setGeometry(gl){
     gl.bufferData(
@@ -76,28 +77,32 @@ void main(){
     gl_FragColor = v_color;
 }
 ```
-Buffers are the way of getting vertex and other per-vertex data onto GPU.
-* *var buf = gl.createBuffer();*
-* *gl.bindBuffer(gl.ARRAY_BUFFER, buf);* - set that buffer as the working buffer
-* *gl.bufferData(gl.ARRAY_BUFFER, someData, gl.STATIC_DRAW);* - copy data into buffer
+## Buffers
+**Buffers** are the way of getting vertex and other per-vertex data onto GPU.
+*var buf = gl.createBuffer();*
+*gl.bindBuffer(gl.ARRAY_BUFFER, buf);* - set that buffer as the working buffer
+*gl.bufferData(gl.ARRAY_BUFFER, someData, gl.STATIC_DRAW);* - copy data into buffer
 these are all **initialization**.
 
-Pull data out of buffer and provide it to the vertex shader's **attributes**.
-
+## Attributes
+Then we pull data out of buffer and provide it to the vertex shader's **Attributes**.
 Attributes can use *float, vec2, vec3, vec4, mat2, mat3, mat4* as types.
+in shader -
+*attribute vec4 a_position;*
+in js at init time -
+*var positionLoc = gl.getAttribLocation(someShaderProgram, "a_position");* - look up what locations it assigned to the attributes.
+in render time -
+*gl.enableVertexAttribArray(positionLoc);* - turn on pull data out of a buffer for this attribute
+*gl.bindBuffer(gl.ARRAY_BUFFER, someBuffer);
+*gl.vertexAttribPointer(
+  location,
+  numComponents,
+  typeOfData,
+  normalizeFlag,
+  strideToNextPieceOfData,
+  offsetIntoBuffer);*
 
-* *var positionLoc = gl.getAttribLocation(someShaderProgram, "a_position");* - given a shader program you made, first we look up what locations it assigned to the attributes.
-* *gl.enableVertexAttribArray(positionLoc);* - turn on pull data out of a buffer for this attribute
-* gl.bindBuffer(gl.ARRAY_BUFFER, someBuffer);
-* *gl.vertexAttribPointer(
-    location,
-    numComponents,
-    typeOfData,
-    normalizeFlag,
-    strideToNextPieceOfData,
-    offsetIntoBuffer);*
-these are all **initialization**.
-
+## Data format reference
 > The **Float32Array** typed array represents an array of 32-bit floating point numbers (corresponding to the C float data type) in the platform byte order.
 
 bit = 1 or 0
@@ -115,10 +120,34 @@ https://web.stanford.edu/class/cs101/bits-bytes.html
 
 # GLSL
 ## vertex shader
-* It's job is to generate clipspace coordinates.
-* It's called once per vertex.
+* to generate clipspace coordinates.
+* called once per vertex.
 
 get data in 3 ways:
 * Attributes (data pulled from buffers), see previous section # How it works.
 * Uniforms (values that stay the same during for all vertices of a single draw call)
 * Textures (data from pixels/texels)
+
+## Uniforms
+in shader -
+*uniform vec4 u_offset;*
+in js at init time
+*var offsetLoc = gl.getUniformLocation(someProgram, "u_offset");* - look up the location of the uniform at initialization time
+in render time
+*gl.uniform4fv(offsetLoc, [1, 0, 0, 0]);  // offset it to the right half the screen*
+
+## fragment shader
+* provide a color for the current pixel being rasterized
+
+## Textures
+in shader -
+*uniform sampler2D u_texture;*
+*vec2  texcoord = vec2(0.5, 0.5);*
+*gl_FragColor = texture2D(u_texture, texcoord);*
+in js at init time
+*var someSamplerLoc = gl.getUniformLocation(someProgram, "u_texture");*
+in render time
+*var unit = 5;  // Pick some texture unit*
+*gl.activeTexture(gl.TEXTURE0 + unit);*
+*gl.bindTexture(gl.TEXTURE_2D, tex);*
+*gl.uniform1i(someSamplerLoc, unit);*
