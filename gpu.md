@@ -77,7 +77,7 @@ To wrap up the occlusion pass, **ShadowFrustumQueries** issues hardware occlusio
 Worth noting is that although we have 4 shadow casting local lights in the scene (for which we need to calculate a shadowmap every frame frame), the number of drawcalls under ShadowFrustumQueries is 3. I suspect this is because one of the lights’ bounding volume intersects the camera’s near plane so Unreal assumes that it will be visible anyway.
 
 Also, worth mentioning is that for **dynamic lights**, where a **cubemap shadowmap** will be calculated, we submit a sphere shape for occlusion tests,
-![](.png)
+![](https://interplayoflight.files.wordpress.com/2017/10/image6.png)
 
 while for static dynamic lights which Unreal calculates per object shadows (more on this later), a frustum is submitted:
 ![](https://interplayoflight.files.wordpress.com/2017/10/image7.png)
